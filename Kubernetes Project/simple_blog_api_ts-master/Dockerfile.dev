@@ -1,0 +1,24 @@
+#Build Phase
+FROM node:18-alpine as builder
+# Work Directory
+WORKDIR /usr/app
+#copy packge files into container
+COPY package.json ./
+# Install Dependencies
+RUN npm install
+#cop other files into container
+COPY ./ ./
+RUN npm run build
+
+#Run phase
+FROM node:18-alpine
+# Work Directory
+WORKDIR /usr/app
+#copy packge files into container
+COPY package.json ./
+# Install Dependencies
+RUN npm install
+#cop other files into container
+COPY --from=builder /usr/app/dist ./
+CMD ["node", "server.js"]
+
