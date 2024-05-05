@@ -1,0 +1,25 @@
+--Create database
+create database office;
+
+--Any hive cmd run after this will make use of office database
+hive> use office;
+
+--Create Employee table
+CREATE TABLE employee
+(id INT, name STRING, dept STRING, yoj INT, salary INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+TBLPROPERTIES ("skip.header.line.count"="1");
+
+--To see the schema of table
+DESCRIBE employee;
+
+--Load the data into Emp table
+LOAD DATA LOCAL INPATH
+'/root/EmpData.csv'
+INTO TABLE employee;
+
+--select statement for Employee
+SELECT * FROM employee;
+
+--to check the count
+SELECT count(*) FROM employee;
